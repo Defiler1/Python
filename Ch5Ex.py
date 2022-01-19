@@ -249,3 +249,71 @@ def sublist(s, low, high):
         return []
 
 # print(sublist(s, 0, 3)) # [1,2,3]
+
+# 5.12 이웃과 차이 줄이기
+def reduce_diff(ns):
+    if len(ns) > 1:
+        if ns[0] < ns[1]:
+            return [ns[0] + 1] + reduce_diff(ns[1:])
+        elif ns[0] > ns[1]:
+            return [ns[0] - 1] + reduce_diff(ns[1:])
+        else:
+            return [ns[0]] + reduce_diff(ns[1:])
+    else:
+        return ns
+
+# print(reduce_diff([4,6,5,3,7,6,2,1,3,2]))
+
+# 꼬리재귀 버전
+def reduce_diff2(ns):
+    def loop(ns, result):
+        if len(ns) > 1:
+            if ns[0] < ns[1]:
+                result.append(ns[0] + 1)
+            elif ns[0] > ns[1]:
+                result.append(ns[0] - 1)
+            else:
+                result.append(ns[0])
+            return loop(ns[1:], result)
+        else:
+            result.append(ns[0])
+            return result
+    return loop(ns, [])
+
+# print(reduce_diff2([4,6,5,3,7,6,2,1,3,2]))
+
+# while 버전
+def reduce_diff3(ns):
+    result = []
+    while len(ns) > 1:
+        if ns[0] < ns[1]:
+            result.append(ns[0] + 1)
+        elif ns[0] > ns[1]:
+            result.append(ns[0] - 1)
+        else:
+            result.append(ns[0])
+        ns = ns[1:]
+    result.append(ns[0])
+    return result
+
+# print(reduce_diff3([4,6,5,3,7,6,2,1,3,2]))
+
+# for 버전
+def reduce_diff4(ns):
+    current = ns[0]
+    pairs = []
+    for n in ns[1:]:
+        pairs.append((current, n))
+        current = n
+    result = []
+    for (n0, n1) in pairs:
+        if n0 < n1:
+            result.append(n0 + 1)
+        elif n0 > n1:
+            result.append(n0 - 1)
+        else:
+            result.append(n0)
+    result.append(ns[-1])
+    return result
+    
+# print(reduce_diff4([4,6,5,3,7,6,2,1,3,2]))
