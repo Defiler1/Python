@@ -68,7 +68,11 @@
 # print(permutation(4,3))
 
 # 5.5 급수 계산(for 루프 버전)
+from doctest import FAIL_FAST
 import numbers
+import pstats
+
+from chap5sol import substrings_of_length
 
 
 def sum_of_num_over_next(n):
@@ -317,3 +321,107 @@ def reduce_diff4(ns):
     return result
     
 # print(reduce_diff4([4,6,5,3,7,6,2,1,3,2]))
+
+# 5.13 동일화
+def allequal(ns):
+    if len(ns) > 1:
+        first = ns[0]
+        for i in ns[1:]:
+            if first != i:
+                return False
+        return True
+    else:
+        return True
+
+def equalizer(ns):
+    count = 0
+    if len(ns) > 1:
+        while not allequal(ns):
+            ns = reduce_diff(ns)
+            count += 1
+    return count
+
+# print(equalizer([4,6,5,3,7,6,2,1,3,2]))
+
+# 5.14 부분 문자열 가
+def substrins_of_length(k,s):
+    if k == 0:
+        return ['']
+    elif 0 < k <= len(s):
+        subs = []
+        for i in range(len(s)-k + 1):
+            subs.append(s[i:i+k])
+        return subs
+    else:
+        return None
+
+# print(substrins_of_length(2, "ERICA"))
+# print(substrins_of_length(0, "ERICA"))
+    
+# substring 함수 나
+def substring(s):
+    subs = ['']
+    for i in range(1, len(s) + 1):
+        subs += substrings_of_length(i,s)
+    return subs
+
+# print(substring("ERICA"))
+
+# 5.15 진수 변환
+def bin2dec(bin):
+    length = len(bin)
+    dec = 0
+    for i in range(length):
+        dec += int(bin[i]) * (2 ** (length - i -1))
+    return dec
+
+# def bin2dec(bin):
+#     length = len(bin)
+#     dec = 0
+#     for i in range(length):
+#         if bin[i] == '1':
+#             dec += 2 ** (length - i - 1)
+#     return dec
+
+# print(bin2dec("110")) # 6
+# print(bin2dec("10011")) # 19
+# print(bin2dec("101010")) # 42
+
+
+# dec2bin 함수
+def dec2bin(dec):
+    bin = ''
+    while not (dec == 0 or dec == 1):
+        r = dec % 2
+        bin = str(r) + bin
+        dec = dec // 2
+    bin = str(dec) + bin
+    return bin
+
+# print(dec2bin(0))
+# print(dec2bin(6))   # 110
+# print(dec2bin(19))  # 10011
+
+# 5.16 이진수 덧셈
+def add_binary(n1, n2):
+    over = 0
+    answer = ''
+    for d in range(-1, -len(n1) - 1, -1):
+        total = int(n1[d]) + int(n2[d]) + over
+        if total == 1:
+            over = 0
+            answer = '1' + answer
+        elif total == 2:
+            over = 1
+            answer = '0' + answer
+        elif total == 3:
+            over = 1
+            answer = '1' + answer
+        else:   # toal = 0
+            over = 0
+            answer = '0' + answer
+    if over == 1:
+        answer = '1' + answer
+    return answer
+
+print(add_binary('1011','1101')) # 11000
