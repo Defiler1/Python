@@ -1,24 +1,19 @@
-print("Score Average Calculator")
-number = input("How many classes? ")
-while not (number.isdigit() and int(number) > 0):
-    number = input("Enter a positive number: ")
-print("The number of classes =", number)
-total = 0
-count = 0
-while count < int(number):
-    score = input("Enter your score: ")
-    while not (score.isdigit() and 0 <= int(score) <= 100):
-        score = input("Enter your score between 0 and 100: ")
-    print("Your score =", score)
-    total = total + int(score)
-    count = count + 1
-if count > 0:
-    print("Your average score =", round(total/count,1))
-else:
-    print("Your average score = 0.0")
+def find_1st(filename,x):
+    infile = open(filename,"r")
+    outfile = open("result.txt","w")
+    text = infile.read()
+    position = text.find(x)
+    if position == -1:
+        outfile.write(x + " is not found.\n")
+    else:
+        outfile.write(x + " is at " + str(position) + " the 1st time.\n")
+    outfile.close()
+    infile.close()
+    print("Done")
 
-
-
-
-
+# # Test code
+find_1st('article.txt','computer')    # at 3269 the 1st time.
+find_1st('article.txt','Whole Earth') # at 10735 the 1st time.
+# find_1st('article.txt','Apple')       # at 4380 the 1st time.
+# find_1st('article.txt','apple')       # not found.
 
