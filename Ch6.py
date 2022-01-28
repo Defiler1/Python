@@ -254,7 +254,7 @@ def find_2nd(filename, x):
 # find_2nd('article.txt', 'computer')
 # find_2nd('article.txt','Whole Earth')
 # find_2nd('article.txt','Apple')     
-find_2nd('article.txt','apple') 
+# find_2nd('article.txt','apple') 
 
 # code 6-17
 def find_last(filename, x):
@@ -270,7 +270,200 @@ def find_last(filename, x):
    infile.close()
    print('Done')
 
-# find_2nd('article.txt', 'computer')
-# find_2nd('article.txt','Whole Earth')
-# find_2nd('article.txt','Apple')     
-find_2nd('article.txt','apple') 
+# find_last('article.txt', 'computer')
+# find_last('article.txt','Whole Earth')
+# find_last('article.txt','Apple')     
+# find_last('article.txt','apple') 
+
+
+# code 6-18
+def find_all(filename, x):
+   infile = open(filename, 'r')
+   outfile = open('result.txt', 'w')
+   text = infile.read()
+   position = text.find(x)
+   if position == -1:
+      outfile.write(x + ' is not found\n')
+   outfile.write(x + ' is at ')
+   while position != -1:
+      outfile.write(str(position) + ', ')
+      position = text.find(x, position + 1)
+   outfile.close()
+   infile.close()
+   print('Done')
+
+
+# find_all('article.txt', 'computer')
+# find_all('article.txt','Whole Earth')
+# find_all('article.txt','Apple')     
+# find_all('article.txt','apple') 
+
+
+# code 6-19
+def find_all_count(filename, x):
+   infile = open(filename, 'r')
+   outfile = open('result.txt', 'w')
+   text = infile.read()
+   position = text.find(x)
+   count = 0
+         
+   while position != -1:
+      count += 1
+      position = text.find(x, position + 1)
+
+   outfile.write(str(count) + ' time(s)')
+   outfile.close()
+   infile.close()
+   print('Done')
+
+# find_all_count('article.txt', 'computer')
+# find_all_count('article.txt','Whole Earth')
+# find_all_count('article.txt','Apple')     
+# find_all_count('article.txt','apple') 
+
+# code 6-20
+def find_quotes_all(filename):
+   infile = open(filename, 'r')
+   outfile = open('result.txt', 'w')
+   text = infile.read()
+   count = 0
+   begin = text.find('"')
+   while begin != -1:
+      (quote, end, text) = text[begin+1:].partition('"')
+      outfile.write('"' + quote +'"\n\n')
+      count += 1
+      begin = text.find('"')
+
+   outfile.write('There are ' + str(count) + " quotes in total.")
+   outfile.close()
+   infile.close()
+   print('Done')
+
+# find_quotes_all('article.txt')
+
+# code 6-20
+def greatest(ns):
+   def loop(ns, top):
+      if ns != []:
+         if ns[0] > top:
+            return loop(ns[1:], ns[0])
+         else:
+            return loop(ns[1:], top)
+      else:
+         return top
+         
+   if len(ns) == 0:
+      return None
+   else:
+      return loop(ns[1:], ns[0])
+   
+
+# print(greatest([5,2,3,6,4,3,7,5,8,2]))    # 8
+
+def greatest2(ns):
+   if len(ns) == 0:
+      return None
+   else:
+      top = ns[0]
+      ns = ns[1:]
+      while ns != []:
+         if ns[0] > top:
+            top = ns[0]
+         ns = ns[1:]
+      return top
+
+# print(greatest2([5,2,3,6,4,3,7,5,8,2]))    # 8
+
+
+def greatest3(ns):
+   if len(ns) == 0:
+      return None
+   else:
+      top = ns[0]
+      for i in ns:
+         if i > top:
+            top = i
+
+   return top
+
+# print(greatest3([5,2,3,6,4,3,7,5,8,2]))    # 8
+
+
+# code 6-21
+def rankith(ns, i):
+   
+   if len(ns) == 0:
+      return None
+   else:
+      top = max(ns)
+      for n in range(i - 1):
+         ns.remove(top)
+         top = max(ns)
+
+      return top
+
+# print(rankith([5,2,3,6,4,3,7,5,8,2], 1))   # 8
+# print(rankith([5,2,3,6,4,3,7,5,8,2], 2))   # 7
+# print(rankith([5,2,3,6,4,3,7,5,8,2], 4))   # 5
+# print(rankith([5,2,3,6,4,3,7,5,8,2],5))    # 5
+# print(rankith([5,2,3,6,4,3,7,5,8,2],6))    # 4
+# print(rankith([5,2],2))                    # 2
+# print(rankith([5],1))                      # 5
+# print(rankith([],1))                       # None
+
+
+# code 6-22
+def remove(c,s):
+   if s != '':
+      if s[0] != c:
+         return s[0] + remove(c,s[1:])
+      else:
+         return remove(c,s[1:])
+   else:
+      return ''
+
+# print(remove('a', 'abracadabra'))   #brcdbr
+# print(remove('z', 'abracadabra'))   #abracadabra
+
+
+def remove2(c,s):
+   def loop(s,result):
+      if s != '':
+         if s[0] != c:
+            result += s[0]
+            return loop(s[1:],result)
+         else:
+            return loop(s[1:],result)
+      else:
+         return result
+
+   return loop(s,'')
+
+# print(remove2('a', 'abracadabra'))   #brcdbr
+# print(remove2('z', 'abracadabra'))   #abracadabra
+
+
+def remove3(c,s):
+   result = ''
+   while s != '':
+      if s[0] != c:
+         result += s[0]
+      s = s[1:]
+   return result
+
+# print(remove3('a', 'abracadabra'))   #brcdbr
+# print(remove3('z', 'abracadabra'))   #abracadabra
+
+
+def remove4(c,s):
+   result = ''
+   for i in s:
+      if c != i:
+         result += i
+   return result
+
+# print(remove4('a', 'abracadabra'))   #brcdbr
+# print(remove4('z', 'abracadabra'))   #abracadabra
+
+
+# code 6-23
