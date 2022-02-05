@@ -1,6 +1,8 @@
 import random
 from random import randrange
+from textwrap import indent
 import time
+from tkinter.filedialog import test
 
 # code 6-1
 def seq_search_OX(s,x):
@@ -467,3 +469,148 @@ def remove4(c,s):
 
 
 # code 6-23
+def collect_dups(s):
+   singles = ""
+   duplicates = []
+   # for loop
+   for i in s:
+      if i not in singles:
+         singles += i
+      elif i in singles:
+         if i != ' ':
+            duplicates.append(i)
+   return duplicates
+
+
+# print(collect_dups("sophisticated"))   # s,i,t
+# print(collect_dups("I'm no angel."))   # ' ', n
+
+
+# 6.5 아이소그램 확인
+def isisogram(s):
+   if len(collect_dups(s)) > 0:
+      return False
+   else:
+      return True
+
+# print(isisogram('seoul'))
+# print(isisogram('korea'))
+# print(isisogram('jazz'))
+# print(isisogram(''))
+
+   
+# code 6-24
+def isanagram(word1, word2):
+   while word1 != '':
+      if word1[0] in word2:
+         index = word2.find(word1[0])
+         word1 = word1[1:]
+         word2 = word2[:index] + word2[index + 1:]
+      else:
+         return False
+   return word2 == ''
+
+# print(isanagram('silent', 'listen'))      # True
+# print(isanagram('silent', 'listens'))     # False 
+# print(isanagram('elvis', 'lives'))        # True
+
+
+# 6.7 완전수 찾기
+# 자신을 제외한 약수의 리스트를 모아주는 보조함수
+def collect_divisors(n):
+   divisor = 2
+   divisors = [1]
+   while n / divisor >= 2:
+      if n / divisor == n // divisor:
+         divisors.append(divisor)
+      divisor += 1
+   return divisors
+
+# print(collect_divisors(6))
+
+
+def find_perfects_upto(n):
+   perfects = []
+   for i in range(2, n + 1):
+      total = sum(collect_divisors(i))
+      if i == total:
+         perfects.append(i)
+   return perfects
+
+# print(find_perfects_upto(10000))  # [6,28,496,8128]
+
+
+# code 6-25
+def search_widest_gap(ss):
+   if len(ss) == 0:
+      return None, 0
+   elif len(ss) == 1:
+      return 0, 0
+   else:
+      widest = 0
+      index = 0
+      for i in range(len(ss) - 1):
+         gap = ss[i + 1] - ss[i]
+         if gap > widest:
+            widest = gap
+            index = i
+      return index, widest
+
+# print(search_widest_gap([]))                 #  None, 0
+# print(search_widest_gap([3]))                #  0,0
+# print(search_widest_gap([3,5,8,20,22]))      #  2, 12
+
+
+# code 6-26
+def testsearch_widest_gap():
+   db = random.sample(range(500), 100)
+   print("Searching the widest gap...")
+   db.sort()
+   print(db)
+   index, gap = search_widest_gap(db)
+   print("The widest gap is:", gap)
+   print("between", db[index], "and", db[index+1])
+   print('at',index)
+
+# testsearch_widest_gap()
+
+
+# code 6-27
+def ascending(ns):
+   if len(ns) <= 1:
+      return False
+   else:
+      front = ns[0]
+      for i in ns[1:]:
+         if front >= i:
+            return False
+         front = i
+      return True
+
+# print(ascending([1,3]))             # True
+# print(ascending([]))                # False
+# print(ascending([2,3,6,8,12,17]))   # True
+# print(ascending([2,3,1]))   # false
+# print(ascending([1,2,2,3]))   # false
+# print(ascending([3,3,3,3]))   # false
+
+
+# code 6-28
+def sublists(ns):
+   def get(k, ns):
+      subs = []
+      for i in range(len(ns)-k+1):
+         subs.append(ns[i:i+k])
+      return subs
+   subs = [[]]
+   for k in range(1,len(ns)):
+      subs += get(k,ns)
+   if ns != []:
+      subs.append(ns)
+   return subs
+
+
+# print(sublists([]))
+# print(sublists([1]))
+# print(sublists([1,2]))
+# print(sublists([1,2,3]))
