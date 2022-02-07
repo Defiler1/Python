@@ -1,19 +1,35 @@
-def find_1st(filename,x):
-    infile = open(filename,"r")
-    outfile = open("result.txt","w")
-    text = infile.read()
-    position = text.find(x)
-    if position == -1:
-        outfile.write(x + " is not found.\n")
-    else:
-        outfile.write(x + " is at " + str(position) + " the 1st time.\n")
-    outfile.close()
-    infile.close()
-    print("Done")
+def ascending(ns):
+   if len(ns) < 2:
+      return False
+   else:
+      while len(ns) >= 2:
+         if ns[0] < ns[1]:
+            ns = ns[1:]
+         else:
+            return False
+      return True
 
-# # Test code
-find_1st('article.txt','computer')    # at 3269 the 1st time.
-find_1st('article.txt','Whole Earth') # at 10735 the 1st time.
-# find_1st('article.txt','Apple')       # at 4380 the 1st time.
-# find_1st('article.txt','apple')       # not found.
+# print(ascending([3,1,2])) 
 
+
+
+def sublists(ns):
+    def get(k,ns):
+        subs = []
+        for i in range(len(ns)-k+1):
+            subs.append(ns[i:i+k])
+        return subs
+    subs = [[]]
+    for k in range(1,len(ns)):
+        subs += get(k,ns)
+    if ns != []:
+        subs.append(ns)
+    return subs
+
+
+# print(sublists([3,1,2])) 
+# [[], [3], [1], [2], [3, 1], [1, 2], [3, 1, 2]]
+
+
+# print(ascending_sublists([3,1,2])) 
+# # [[1, 2]]

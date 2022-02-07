@@ -190,27 +190,27 @@ def greatest(ns):
     else:
         return loop(ns[1:],ns[0])
 
-def greatest(ns):
-    if len(ns) == 0:
-        return None
-    else:
-    	top = ns[0]
-        ns = ns[1:]
-    	while ns != []:
-    		if ns[0] > top:
-    			top = ns[0]
-    		ns = ns[1:]
-    	return top
+def greatest2(ns):
+   if len(ns) == 0:
+      return None
+   else:
+      top = ns[0]
+      ns = ns[1:]
+      while ns != []:
+         if ns[0] > top:
+            top = ns[0]
+         ns = ns[1:]
+      return top
 
-def greatest(ns):
-    if len(ns) == 0:
-        return None
-    else:
-    	top = ns[0]
-    	for n in ns:
-    		if n > top:
-    			top = n
-    	return top
+def greatest3(ns):
+   if len(ns) == 0:
+      return None
+   else:
+      top = ns[0]
+      for i in ns:
+         if i > top:
+            top = i
+   return top
 
 # # Test code
 # print(greatest([5,2,3,6,4,3,7,5,8,2])) # 8
@@ -379,7 +379,7 @@ def isanagram(word1,word2):
 
 ### 6.7 - 완전수 찾기 (p.310)
 
-# 자산을 제외한 약수의 리스트를 모아주는 보조 함수
+# 자신을 제외한 약수의 리스트를 모아주는 보조 함수
 def collect_divisors(n):
     divisor = 2
     divisors = [1]
