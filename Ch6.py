@@ -686,8 +686,14 @@ def ascending_sublists(ns):
 
 # code 6.30
 def longest_ascending_sublist(ns):
-      
-   pass
+   ascs = ascending_sublists(ns)
+   if ascs != []:
+      index = len(ascs) - 1
+      while index != 0 and len(ascs[index]) == len(ascs[index-1]):
+         index -= 1
+      return ascs[index]
+   else:
+      return []
 
 
 # print(longest_ascending_sublist([1,5,3,4,8,2,3,5]))
@@ -698,3 +704,109 @@ def longest_ascending_sublist(ns):
 # print(longest_ascending_sublist(sample))
 # # [28, 37, 61, 66, 89]
 
+
+# code 6.31
+def longest_steepest_ascending_sublist(ns):
+   ascs = ascending_sublists(ns)
+   if ascs != []:
+      index = len(ascs) - 1
+      steepest = ascs[index]
+      while index > 0 and len(ascs[index]) == len(ascs[index-1]):
+         if steepest[-1] - steepest[0] <= ascs[index-1][-1] - ascs[index-1][0]:
+            steepest = ascs[index-1]
+         index -= 1
+      return steepest
+   else:   
+      return []
+
+
+
+# print(longest_steepest_ascending_sublist([1,5,3,4,8,2,3,5]))
+# # [3, 4, 8]
+# print(longest_steepest_ascending_sublist([]))
+# # []
+# sample = [59, 4, 38, 54, 33, 75, 19, 73, 49, 7, 86, 28, 54, 13, 6, 42, 97, 84, 26, 69, 86, 14, 79, 27, 68, 57, 35, 53, 92, 58, 68, 49, 93, 28, 31, 63, 51, 1, 44, 62, 14, 40, 53, 40, 5, 69, 81, 95, 58, 55, 90, 56, 91, 40, 55, 14, 65, 28, 37, 61, 66, 89, 26, 63, 98, 59, 7, 23, 34, 67, 77, 30, 49, 55, 31, 58, 10, 27, 15, 45, 42, 77, 11, 14, 9, 55, 88, 44, 53, 12, 54, 95, 25, 91, 29, 8, 25, 90, 34, 55]
+# print(longest_steepest_ascending_sublist(sample))
+# # [7, 23, 34, 67, 77]
+
+
+# code 6.32
+def longest_streak(s):
+   if s != '':
+      contender = leader = s[0]
+      streak_length = streak_record = 1
+      for n in s[1:]:
+         if n == contender:
+            streak_length += 1
+         else:
+            contender = n
+            streak_length = 1
+         if streak_length > streak_record:
+            leader = contender
+            streak_record = streak_length
+      return leader, streak_record
+   else:
+      return None
+
+# print(longest_streak(""))
+# # None
+# print(longest_streak("5"))
+# # ('5', 1)
+# print(longest_streak("06479019955907200041185008780528384811265678111671"))
+# # ('0', 3)
+# print(longest_streak("49715114250863455559013207228395154984882560834674")) 
+# # ('5', 4)
+# print(longest_streak("79083787262159815638834042282485195270836937488097")) 
+# # ('8', 2)
+# print(longest_streak("36888653851748777011129000999371447120618209984726"))
+# # ('8', 3)
+# (가장 긴 스트릭 문자, 스트릭 길이)
+
+
+# code 6.33
+def longest_streak1(s):
+   if s != '':
+      contender = leader = s[0]
+      streak_length = streak_record = 1
+      contender_index = leader_index = 0
+      index = 1
+      for i in s[1:]:
+         if i == contender:
+            streak_length += 1
+         else:
+            contender = i
+            streak_length = 1
+            contender_index = index
+
+         if streak_length > streak_record:
+            leader = contender
+            streak_record = streak_length
+            leader_index = contender_index
+         index += 1
+      return leader, streak_record, leader_index
+   else:
+      return None
+
+
+# (가장 긴 스트릭 문자, 스트릭 길이, 시작인덱스 번호)
+
+# print(longest_streak1(""))
+# # None
+# print(longest_streak1("5"))
+# # ('5', 1, 0)
+# print(longest_streak1("06479019955907200041185008780528384811265678111671"))
+# # ('0', 3, 15)
+# print(longest_streak1("49715114250863455559013207228395154984882560834674")) 
+# # ('5', 4, 15)
+# print(longest_streak1("79083787262159815638834042282485195270836937488097")) 
+# # ('8', 2, 19)
+# print(longest_streak1("36888653851748777011129000999371447120618209984726"))
+# # ('8', 3, 2)
+
+# code 6.34
+def longest_streak2(s):
+   pass
+
+
+# 6.11 소수하고 나~하고
+# 6.12 가장 가까운 키 이분검색
