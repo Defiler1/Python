@@ -1,4 +1,9 @@
+# 피보나치 수열
 # code 7.1
+from re import L
+from matplotlib.pyplot import step
+
+
 def fib(n):
    if n > 1:
       return fib(n-1) + fib(n-2)
@@ -81,6 +86,82 @@ def run_combination(n, r):
    result = combination(n, r)
    end = perf_counter()
    print('result=', result)
-   print('runtime =', end - start)
+   print('runtime =', round(end - start, 4))
 
-run_combination(30,20)
+# run_combination(30,20)
+
+# 파스칼의 삼각형
+
+# code 7.8
+def comb_pascal(n,r):
+   rowO = [1 for _ in range(r+1)]   # 첫 가로줄
+   matrix = [rowO] + [[1] for _ in range(n-r)]  # 행렬
+   for i in range(1, n-r+1):
+      for j in range(1, r+1):
+         newvalue = matrix[i][j-1] + matrix[i-1][j]
+         matrix[i].append(newvalue)
+   return matrix[n-r][r]
+
+
+def run_comb_pascal(n,r):
+   from time import perf_counter
+   start = perf_counter()
+   result = comb_pascal(n,r)
+   end = perf_counter()
+   print('result:', result)
+   print('runtime:', round(end-start,4))
+
+# run_comb_pascal(30,3)  # 4060 - 0.0 seconds
+# run_comb_pascal(30,27) # 4060 - 0.0 seconds
+# run_comb_pascal(30,7)  # 2035800 - 0.0001 seconds
+# run_comb_pascal(30,23) # 2035800 - 0.0 seconds
+# run_comb_pascal(30,10) # 30045015 - 0.0001 seconds
+# run_comb_pascal(30,20) # 30045015 - 0.0001 seconds
+# run_comb_pascal(30,15) # 155117520 - 0.0001 seconds
+# run_comb_pascal(6,4) # 15 - 0.0
+
+# code 7.9
+def comb_pascal2(n,r):
+   vector = [1 for _ in range(r+1)]
+   for _ in range(1, n-r+1):
+      for j in range(1, r+1):
+         vector[j] = vector[j-1] + vector[j]
+   return vector[r]
+
+
+# code 7.10 **
+def minsteps(n):
+   if n > 1:
+      steps = minsteps(n-1)
+      print('1번', steps)
+      if n % 2 == 0:
+         steps = min(steps, minsteps(n//2))
+         print('2번', steps)
+      if n % 3 == 0:
+         steps = min(steps, minsteps(n//3))
+         print('3번', steps)
+      return 1 + steps
+   else:
+      return 0
+
+# print(minsteps(2))
+# print(minsteps(4))
+
+# code 7.12
+def memo_minsteps(n):
+   memo = [0 for _ in range(n+1)]
+   def loop(n):
+      if n > 1:
+         if memo[n] == 0:
+            steps = loop(n-1)
+            if n % 2 == 0:
+               steps = min(steps, loop(n // 2))
+            if n % 3 == 0:
+               steps = min(steps, loop(n // 3))
+            memo[n] = steps + 1
+         return memo[n]
+      else:
+         return 0
+   return loop(n)
+
+print(memo_minsteps(10))
