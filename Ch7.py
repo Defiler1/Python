@@ -1,6 +1,6 @@
 # 피보나치 수열
 # code 7.1
-from re import L
+from re import L, finditer
 from matplotlib.pyplot import step
 
 
@@ -204,5 +204,34 @@ def tower_of_hanoi(n, source, destin, temp):
    else:
       print('Move a disk from', source, 'to', destin)
 
-# A - 출발 B - 임시 C - 도착
-tower_of_hanoi(3, 'A', 'C', 'B')
+# tower_of_hanoi(3, 'A', 'C', 'B')
+
+# code 7.15
+def tower_of_hanoi2(n, source, destin, temp):
+   global count
+   if n > 1:
+      tower_of_hanoi2(n-1, source, temp, destin)
+      count += 1
+      tower_of_hanoi2(n-1, temp, destin, source)
+   else:
+      count += 1
+
+for n in [4,6,8,16,24,25,26,27,28]:
+   count = 0
+   from time import perf_counter
+   start = perf_counter()
+   tower_of_hanoi2(n, 'A', 'C', 'B')
+   finish = perf_counter()
+   cpu_time = round(finish-start,1) # 소수점 첫째자리수 까지 반올림
+   print(n, 'disks:', count, 'moves in', cpu_time, 'seconds')
+
+# 4 disks: 15 moves in 0.0 seconds
+# 6 disks: 63 moves in 0.0 seconds
+# 8 disks: 255 moves in 0.0 seconds
+# 16 disks: 65535 moves in 0.0 seconds
+# 24 disks: 16777215 moves in 2.9 seconds
+# 25 disks: 33554431 moves in 5.2 seconds
+# 26 disks: 67108863 moves in 10.0 seconds
+# 27 disks: 134217727 moves in 20.0 seconds
+# 28 disks: 268435455 moves in 40.0 seconds
+
