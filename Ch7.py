@@ -179,16 +179,30 @@ def minsteps(n):
       memo[i] = steps + 1
    return memo[n]
    
-print(minsteps(3))       # 1
-print(minsteps(4))       # 2
-print(minsteps(7))       # 3
-print(minsteps(10))      # 3
-print(minsteps(23))      # 6
-print(minsteps(237))     # 8
-print(minsteps(317))     # 10
-print(minsteps(514))     # 8
-print(minsteps(711))     # 9
-print(minsteps(908))     # 11
-print(minsteps(1000))    # 9
-print(minsteps(2020))    # 10
-print(minsteps(1111111)) # 19
+# print(minsteps(3))       # 1
+# print(minsteps(4))       # 2
+# print(minsteps(7))       # 3
+# print(minsteps(10))      # 3
+# print(minsteps(23))      # 6
+# print(minsteps(237))     # 8
+# print(minsteps(317))     # 10
+# print(minsteps(514))     # 8
+# print(minsteps(711))     # 9
+# print(minsteps(908))     # 11
+# print(minsteps(1000))    # 9
+# print(minsteps(2020))    # 10
+# print(minsteps(1111111)) # 19
+
+# 7.4 하노이의 탑
+# code 7.14
+# n - 원반개수 source - 출발점 desin - 도착점 temp - 임시말뚝
+def tower_of_hanoi(n, source, destin, temp):
+   if n > 1:
+      tower_of_hanoi(n-1, source, temp, destin)
+      print('Move a disk from', source, 'to', destin)
+      tower_of_hanoi(n-1, temp, destin, source)
+   else:
+      print('Move a disk from', source, 'to', destin)
+
+# A - 출발 B - 임시 C - 도착
+tower_of_hanoi(3, 'A', 'C', 'B')
