@@ -1,0 +1,19 @@
+minbags(16)
+   minbags(14)
+      minbags(12)
+         minbags(10)
+            minbags(8)
+               minbags(6)
+                  minbags(4)
+                     minbags(2)
+                     return 1
+                  return 2
+               return 2
+            return 2
+         return 2
+      return 3
+   return 3
+return 3      
+
+
+   
