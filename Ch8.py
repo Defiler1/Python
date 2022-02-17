@@ -1,3 +1,5 @@
+import random
+
 # code 8.1
 def code8_1():
    couples = []
@@ -147,11 +149,108 @@ def digit_art_vertical_alternate(n):
 
 # code 8.5     bubble sort 버블 정렬
 def bubblesort(ns):
-   for k in range(1,len(ns),1):
-      for i in range(len(ns)-1):
+   for k in range(1,len(ns),1):  # 1,2,3,4,5,6
+      for i in range(len(ns)-1): 
          if ns[i] > ns[i+1]:
             ns[i], ns[i+1] = ns[i+1], ns[i]
    return ns
 
-print(bubblesort([32,23,18,7,11,99,55]))
+# print(bubblesort([32,23,18,7,11,99,55]))
+# print(bubblesort([71, 48, 3, 22, 56, 54, 7, 54, 61, 3, 10]))
 # [7, 11, 18, 23, 32, 55, 99]
+
+# 랜덤 리스트 만들기 함수
+def build_ns():
+   ns = []
+   import math
+   for i in range(math.floor(random.random() * 10)):
+      a = math.floor(random.random() * 100)
+      ns.append(a)
+   return ns
+
+# print(build_ns())
+
+# code 8.6  기수 정렬
+def radixsort(ds):
+   if ds != []:
+      length = len(ds[0])
+      for i in range(length-1, -1, -1):   # 1,0
+         distributed = [[] for _ in range(10)] # 이차원 배열 
+         for j in ds:   # 정렬
+            distributed[int(j[i])].append(j)
+         ds = []                    # ds초기화
+         for k in distributed:      # ds채우기
+            # ds.append(k)          # distributed는 크기10 ds는 크기5 - out of range
+            ds += k
+      return ds
+   else:
+      return []
+
+# print(radixsort(['33', '66', '92', '23', '79']))
+# ds 요소는 모두 같은 길이
+
+
+# 정답보드를 만들어 리턴
+def initialize_board_4x4():
+   row0 = [1,2,3,4]
+   random.shuffle(row0)
+   row1 = row0[2:4] + row0[0:2]
+   row2 = [row0[1], row0[0], row0[3], row0[2]]
+   row3 = row2[2:4] + row2[0:2]
+   return [row0, row1, row2, row3]
+
+# print(initialize_board_4x4())
+
+
+# 가로줄 바꾸기
+# 가로줄 0과 가로줄 1을 무작위로 바꾸고 가로줄 2와 3을 무작위로 바꿈
+def shuffle_ribbons(board):
+   top = board[:2]
+   bottom = board[2:]
+   random.shuffle(top)
+   random.shuffle(bottom)
+   return top + bottom
+
+
+
+# 실습 8.6 가로세로 뒤집기
+# 알고리즘 설명
+# 가로세로를 뒤집어 저장할 보드를 초기화한다.
+# 가로로 읽어서 세로로 차례로 붙여나간다.
+# code 8.9
+def transpose(board):
+   transposed = []
+   size = len(board)
+   for _ in range(size):
+      transposed.append([])
+   for row in board:
+      for i in range(size):
+         transposed[i].append(row[i])
+   return transposed
+
+b1 = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
+# print(transpose(b1))
+
+
+# 정답보드를 무작위로 하나 만들어 리턴
+# code 8.10
+def create_solution_board_4x4():
+   board = initialize_board_4x4()   # 정답보드 만들기
+   board = shuffle_ribbons(board)   # 랜덤하게 가로줄 바꾸기
+   board = transpose(board)         # 가로세로 뒤집기
+   board = shuffle_ribbons(board)   # 가로줄 바꾸기
+   board = transpose(board)         # 가로세로 뒤집기
+   return board
+
+
+# 실습 8.7
+# 복제한 정답보드와 빈칸의 개수를 인수로 받음
+# 주어진 개수만큼 빈칸을 무작위로 만들어 리턴
+def make_holes(board, no_of_holes):
+   while no_of_holes > 0:
+      i = random.randint(0,3)
+      j = random.randint(0,3)
+
+   return board
+
+# p.396
