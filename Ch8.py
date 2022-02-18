@@ -248,9 +248,22 @@ def create_solution_board_4x4():
 # 주어진 개수만큼 빈칸을 무작위로 만들어 리턴
 def make_holes(board, no_of_holes):
    while no_of_holes > 0:
-      i = random.randint(0,3)
-      j = random.randint(0,3)
-
+      i = random.randint(0,3) # 가로
+      j = random.randint(0,3) # 세로
+      if board[i][j] != 0:
+         board[i][j] = 0
+         no_of_holes -= 1
    return board
 
-# p.396
+
+
+# 퍼즐보드를 실행창에 프린트하여 보여주는 프로시저
+def show_board(board):
+   for row in board:
+      for entry in row:
+         if entry == 0:
+            print('.', end=' ')
+         else:
+            print(entry, end=' ')
+      print()
+

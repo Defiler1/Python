@@ -84,20 +84,57 @@ def get_level():
    else:
       return 10
 
+
 # 4. puzzle_board에 no_of_holes만큼 무작위로 선택하여 0으로 채우기
-   
-
 def make_holes(board, no_of_holes):
-   return
+   while no_of_holes > 0:
+      i = random.randint(0,3) # 가로
+      j = random.randint(0,3) # 세로
+      if board[i][j] != 0:
+         board[i][j] = 0
+         no_of_holes -= 1
+   return board
 
 
+# 퍼즐보드 실행창에 보여줌
+def show_board(board):
+   for row in board:
+      for entry in row:
+         if entry == 0:
+            print('.', end=' ')
+         else:
+            print(entry, end=' ')
+      print()
+
+
+def get_integer(message, i, j):
+   number = input(message)
+   while not (number.isdigit() and i <= int(number) <= j):
+      # str.isdigit() -> 문자열이 숫자로만 구성되 있는지 확인하는 메서드
+      # number를 올바르지 않게 입력했을때 while문 실행
+      number = input(message)
+   return int(number)
 
 
 def sudoku_mini():
-   solution_board = create_solution_board_4x4()
-   puzzle_board = copy_board(solution_board)
-   no_of_holes = get_level()
-   puzzle_board = make_holes(puzzle_board, no_of_holes)
+   solution_board = create_solution_board_4x4()    # 정답보드 생성
+   puzzle_board = copy_board(solution_board)       # 정답보드 카피
+   no_of_holes = get_level()                       # 레벨 입력 받아서 빈칸 개수 결정
+   puzzle_board = make_holes(puzzle_board, no_of_holes)  # 퍼즐보드 생성
+   show_board(puzzle_board)
+   while no_of_holes > 0:
+      i = get_integer('가로줄번호(1~4): ',1,4) - 1
+      j = get_integer('세로줄번호(1~4): ',1,4) - 1
+      if puzzle_board[i][j] != 0:
+         print('빈칸이 아닙니다.')
+         continue
+      n = get_integer('숫자(1~4): ',1,4)
+      if n == solution_board[i][j]:
+         puzzle_board[i][j] = solution_board[i][j]
+         show_board(puzzle_board)
+         no_of_holes -= 1
+      else:
+         print(n,'가(이) 아닙니다. 다시 해보세요.')
+   print('잘 하셨습니다. 또 들려주세요.')
 
-
-# p.396
+sudoku_mini()
