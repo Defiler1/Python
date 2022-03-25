@@ -72,7 +72,7 @@ from doctest import FAIL_FAST
 import numbers
 import pstats
 
-from chap5sol import substrings_of_length
+# from chap5sol import substrings_of_length
 
 
 def sum_of_num_over_next(n):
