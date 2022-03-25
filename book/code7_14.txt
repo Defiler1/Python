@@ -1,0 +1,16 @@
+source destin temp
+toh(3, A, C ,B)
+   toh(2, A, B, C)
+      toh(1, A, C, B)
+      print(A to C)        // A to C
+   print(A to B)           // A to B
+   toh(1, C, B, A)
+   print(C to B)           // C to B
+print(A to C)              // A to C
+   toh(2, B, C, A)
+      toh(1, B, A, C)
+      print(B to A)        // B to A
+   print(B to C)           // B to C
+      toh(1, A, C, B)
+      print(A, C)          // A to C
+      
